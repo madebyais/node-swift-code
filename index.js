@@ -6,7 +6,7 @@ var fs = require('fs');
 var startPage = 1;
 var endPage = 10;
 
-var baseUrl = 'https://www.theswiftcodes.com/indonesia/';
+var baseUrl = 'https://www.theswiftcodes.com/indonesia/page/';
 var urls = [];
 
 for (var i = startPage; startPage <= endPage; startPage++) {
@@ -28,11 +28,7 @@ urls.forEach(function (url) {
 async.series(worker, function (err, data) {
   if (err) return console.dir(err);
   
-  var finalData = [];
-  
-  data.forEach(function (d) {
-    finalData = finalData.concat(d);
-  });
+  var finalData = [].concat.apply([], data);
   
   fs.writeFile('swift.json', JSON.stringify(finalData), 'utf-8', function (err, data) {
     if (err) return console.dir(data);
